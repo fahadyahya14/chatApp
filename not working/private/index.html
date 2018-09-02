@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<head>
+	<title>first</title>
+	<style>
+			*{
+			padding: 0%;
+
+			}
+
+			input{
+				width: 95%;
+				/* text-align: end; */
+		/* vertical-align: baseline; */
+
+			}
+			#input{
+				width: 100%;
+				position: absolute;
+				bottom: 0%;
+				/* position: unset; */
+			}
+
+			.send{
+			background-color: grey;
+			color: white;
+			text-align:left;
+			list-style-type: none;
+			/* width:90%; */
+		/* margin-right: 70%; */
+
+		/* border-radius: 100%; */
+		text-align-last: center;
+		font-size: xx-large;
+		}
+		table{
+			width: 100%;
+
+		} td{
+			width:max-content;
+			padding: 0%;
+		}
+		.messages{
+		position: absolute;
+		top: 0%;
+		right:  0%;
+		}
+
+		 .recived{
+			background-color: grey;
+			color: white;
+		text-align: right;
+			list-style-type: none;
+			line-break: auto;
+			/* width:90%; */
+		/* margin-left: 70%; */
+
+		/* border-radius: 100%; */
+		text-align-last: center;
+		font-size: xx-large	;
+		}
+		#chatBody {
+            overflow-Y: scroll;
+            height: 25% !important;
+            width: 100%;
+        }
+li{
+	width: max-content;
+}
+			</style>
+</head>
+<body>
+
+		<div><p id="name"></p><button id="deleted" onclick="deleted()"><i class="fas fa-trash-alt" style="font-size: x-large;position: absolute;right: 1%;top: 1%"></i></button></div>
+
+
+<div id="chatBody"><table><tr><td><ul id="message">
+</ul></td><td class="messages"><ul id="messages"></ul></td></tr></table>	</div>
+
+	<div id="input">
+	<form action="javascjavascript:void(0)" onsubmit="sendmesssage(0)">
+	<input type="text" name="text" id="text" placeholder="Enter text">
+<button type="submit">Send</button>
+</div>
+
+
+
+
+</form>
+</body>
+<script>
+	sentmessage_show(0)
+	recivedata(0);
+
+
+function sendmesssage(id){
+if(localStorage.getItem("sentdata")==null){
+var name = prompt("Enter Name");
+var messages = document.getElementById("text").value;
+if(messages.length != 0 ){
+document.getElementById("text").value ="";
+var array = [];
+var object = {name:name,message:[]}
+console.log(object)
+object.message.push(messages);
+console.log(object)
+array.push(object)
+console.log(array)
+var array = JSON.stringify(array)
+localStorage.setItem("sentdata",array)}}
+
+
+else if(JSON.parse(localStorage.getItem("sentdata")) != ""){
+var message = document.getElementById("text").value;
+if(message.length != 0 ){
+document.getElementById("text").value ="";
+var array = JSON.parse(localStorage.getItem("sentdata"));
+console.log(array)
+array[id].message.push(message)
+console.log(array)
+var array = JSON.stringify(array)
+localStorage.setItem("sentdata",array)}
+sentmessage_show(id)
+}}
+
+
+
+function recivedata(id){
+
+	if( JSON.parse(localStorage.getItem("reciveddata"))!=null){
+var array = JSON.parse(localStorage.getItem("reciveddata"))
+array = array[id].message
+for(var i =0;i<array.length;i++){
+var li = document.getElementById("messages").innerHTML,
+show = "<li class='recived' >"+ array[i] +"</li>"
+show =li+ show;
+document.getElementById("messages").innerHTML = show
+}
+}}
+
+function sentmessage_show(id){ 
+
+if(localStorage.getItem("sentdata") != null){
+
+	var array = JSON.parse(localStorage.getItem("sentdata"))
+array = array[id].message
+ document.getElementById("message").innerHTML="";
+
+for(var i =0;i<array.length;i++){
+var li = document.getElementById("message").innerHTML,
+show = "<p><li class='send' >"+ array[i] +"</li></p>"
+show =li+ show;
+document.getElementById("message").innerHTML = show
+}
+ }
+ }
+
+
+ //for delected
+ function deleted(){
+	localStorage.clear()
+	 
+ }
+
+
+
+
+</script>
+</html>
